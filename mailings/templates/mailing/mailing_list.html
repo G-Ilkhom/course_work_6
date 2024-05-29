@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Сервис Рассылок{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+    {% include 'mailing/includes/inc_main_menu.html' %}
+
+    <div class="container my-5">
+        {% block content %}
+            <a href="{% url 'mailings:mailing_create' %}" class="btn btn-success mb-3">Создать рассылку</a>
+        {% endblock %}
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for object in object_list|slice:100 %}
+                {% if not object or object.user == user or user.is_superuser or object_groups_user == object_groups %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header bg-secondary text-white">
+                                <h4 class="my-0 fw-normal">Номер рассылки - {{ object.pk }}</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <p class="mb-1">Начало отправки: {{ object.start_date }}</p>
+                                    <p class="mb-1">Конец отправки: {{ object.end_date }}</p>
+                                    <p class="mb-1">Период рассылки: {{ object.frequency }}</p>
+                                    <p class="mb-1">Статус рассылки: {{ object.status }}</p>
+                                    <p class="mb-1">Тема сообщения: {{ object.message }}</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group btn-group-sm">
+                                        <a class="btn btn-primary mr-2" href="{% url 'mailings:mailing_detail' object.pk %}">Посмотреть</a>
+                                        {% if not object or object.user == user or user.is_superuser %}
+                                            <a class="btn btn-warning mr-2" href="{% url 'mailings:mailing_update' object.pk %}">Редактировать</a>
+                                            <a class="btn btn-danger" href="{% url 'mailings:mailing_delete' object.pk %}">Удалить</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-dark text-white">
+        <div class="container">
+            <p class="text-center">© 2024 Сервис Рассылок</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Создание Рассылки{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">
+        {% if object %}
+            Редактирование рассылки
+        {% else %}
+            Создание рассылки
+        {% endif %}
+    </h1>
+    <div class="card shadow rounded-lg">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-success">
+                    {% if object %}
+                    Сохранить
+                    {% else %}
+                    Создать
+                    {% endif %}
+                </button>
+                <a href="{% url 'mailings:mailing_list' %}" class="btn btn-secondary">Назад</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h5 class="text-center mb-4">Вы уверены, что хотите удалить сообщение под номером - {{ object.pk }}?</h5>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-danger mx-2">Удалить</button>
+                            <a href="{% url 'mailings:message_list' %}" class="btn btn-warning mx-2">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

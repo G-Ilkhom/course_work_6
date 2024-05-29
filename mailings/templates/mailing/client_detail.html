@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="card-title mb-0">Клиент №{{ object.pk }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                                <p><strong>Почта:</strong> {{ object.email }}</p>
+                                <p><strong>ФИО:</strong> {{ object.full_name }}</p>
+                                <p><strong>Содержание сообщения:</strong></p>
+                                <p>{{ object.comment }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'mailings:client_list' %}" class="btn btn-secondary">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

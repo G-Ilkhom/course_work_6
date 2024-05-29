@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Сервис Рассылок{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+    <header class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'mailings:home_list' %}">Сервис Рассылок</a>
+            <nav class="navbar-nav d-flex flex-row">
+                <li class="nav-item" style="margin-right: 20px;"><a class="nav-link text-white" href="{% url 'mailings:mailing_list' %}">Рассылки</a></li>
+                <li class="nav-item" style="margin-right: 20px;"><a class="nav-link text-white" href="{% url 'mailings:message_list' %}">Сообщения</a></li>
+                <li class="nav-item" style="margin-right: 20px;"><a class="nav-link text-white" href="{% url 'mailings:client_list' %}">Клиенты</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{% url 'mailings:client_list' %}">Вход</a></li>
+            </nav>
+        </div>
+    </header>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Сервис Рассылок{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+    {% include 'mailing/includes/inc_main_menu.html' %}
+
+    <div class="col-12 mb-5">
+        {% block content %}
+            <a href="{% url 'mailings:mailing_create' %}" class="btn btn-success mt-5 ml-5">Создать рассылку</a>
+        {% endblock %}
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-dark text-white">
+        <div class="container">
+            <p class="text-center">© 2024 Сервис Рассылок</p>
+        </div>
+    </footer>
+</body>
+</html>

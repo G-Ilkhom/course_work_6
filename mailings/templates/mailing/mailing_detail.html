@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="card-title mb-0">Рассылка №{{ object.pk }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Начало отправки:</strong> {{ object.start_date }}</p>
+                            <p><strong>Конец отправки:</strong> {{ object.end_date }}</p>
+                            <p><strong>Период рассылки:</strong> {{ object.get_frequency_display }}</p>
+                            <p><strong>Статус рассылки:</strong> {{ object.get_status_display }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Тема сообщения:</strong> {{ object.message.topic }}</p>
+                            <p><strong>Содержание сообщения:</strong></p>
+                            <p>{{ object.message.content }}</p>
+                        </div>
+                    </div>
+
+                    <h5 class="mt-4">Список клиентов:</h5>
+                    <ul class="list-group">
+                        {% for client in clients %}
+                        <li class="list-group-item">{{ client.full_name }} ({{ client.email }})</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'mailings:mailing_list' %}" class="btn btn-secondary">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
