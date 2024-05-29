@@ -13,16 +13,6 @@ class HomeListView(ListView):
     template_name = 'base.html'
     context_object_name = 'mailing'
 
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        context_data['mailing'] = Mailing.objects.all().count()
-        context_data['active_mailing'] = Mailing.objects.filter(status='Запущена').count()
-        # random.shuffle(blog_list)
-        # context_data['object_list'] = blog_list[:3]
-        context_data['clients_count'] = Client.objects.all().count()
-        context_data['title'] = 'Главная'
-        return context_data
-
 
 class MailingListView(ListView):
     model = Mailing
