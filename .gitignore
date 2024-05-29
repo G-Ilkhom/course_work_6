@@ -114,6 +114,7 @@ jspm_packages/
 *.pydevproject
 .venv
 env/
+venv
 
 # pyenv
 .python-version
