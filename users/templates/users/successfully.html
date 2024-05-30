@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="col-8">
+        <div class="card" style="border-radius: 15px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+            <h3 class="card-title text-center pt-4">
+                Поздравляем, Вы успешно зарегистрировались!<br>
+                Для дальнейшей работы нажмите "Войти".
+            </h3>
+            <div class="card-body" style="padding: 30px;">
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-primary" href="{% url 'users:login' %}">Войти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

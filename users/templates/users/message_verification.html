@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="col-12">
+        <form class='row justify-content-center' method="post" enctype="multipart/form-data" style="margin-top: 2%;">
+            <div class="col-6">
+                <div class="card" style="border-radius: 15px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+                    <h3 class="card-title" style="text-align: center; padding-top: 20px;">
+                        Введите адрес электронной почты
+                    </h3>
+                    <div class="card-body" style="padding: 30px;">
+                        {% csrf_token %}
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control mb-3">
+                        <button type="submit" class="btn btn-success" style="margin-left: 40%;">
+                            Отправить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

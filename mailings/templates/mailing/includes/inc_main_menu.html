@@ -14,7 +14,15 @@
                 <li class="nav-item" style="margin-right: 20px;"><a class="nav-link text-white" href="{% url 'mailings:mailing_list' %}">Рассылки</a></li>
                 <li class="nav-item" style="margin-right: 20px;"><a class="nav-link text-white" href="{% url 'mailings:message_list' %}">Сообщения</a></li>
                 <li class="nav-item" style="margin-right: 20px;"><a class="nav-link text-white" href="{% url 'mailings:client_list' %}">Клиенты</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="{% url 'mailings:client_list' %}">Вход</a></li>
+                {% if perms.users.block_users %}
+                <li class="nav-item" style="margin-right: 20px;"><a class="nav-link text-white" href="{% url 'users:user_list' %}">Пользователи</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li class="nav-item" ><a class="nav-link text-white" href="{% url 'users:logout' %}">Выход</a></li>
+                {% else %}
+                <li class="nav-item"style="margin-right: 20px;"><a class="nav-link text-white" href="{% url 'users:login' %}">Вход</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{% url 'users:register' %}">Регистрация</a></li>
+                {% endif %}
             </nav>
         </div>
     </header>

@@ -21,9 +21,28 @@ class MessageAdmin(admin.ModelAdmin):
 
 @admin.register(Mailing)
 class MailingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'start_date', 'end_date', 'frequency', 'status', 'message')
-    list_filter = ('start_date',)
-    search_fields = ('status', 'frequency')
+    list_display = ['start_date', 'end_date', 'frequency', 'status', 'is_disabled']
+    list_filter = ['frequency', 'status', 'is_disabled']
+    search_fields = ['start_date', 'end_date', 'message__topic']
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.groups.filter(name='Manager').exists():
+            return qs.filter(owner=request.user)
+        return qs
+
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if not request.user.has_perm('mailings.disable_mailing'):
+            if 'delete_selected' in actions:
+                del actions['delete_selected']
+        return actions
+
+    def has_change_permission(self, request, obj=None):
+        has_permission = super().has_change_permission(request, obj)
+        if obj and not obj.owner == request.user:
+            return False
+        return has_permission
 
 
 @admin.register(MailingAttempt)

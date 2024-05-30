@@ -1,8 +1,11 @@
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView, ListView, DeleteView, CreateView, UpdateView
 from django.apps import apps
+from blog.models import BlogPost
 from mailings.forms import ClientForm, MessageForm, MailingForm
 from mailings.models import Client, Message, Mailing
+import random
 
 MailingsConfig = apps.get_app_config('mailings')
 MailingsConfig.ready()
@@ -11,13 +14,40 @@ MailingsConfig.ready()
 class HomeListView(ListView):
     model = Mailing
     template_name = 'base.html'
-    context_object_name = 'mailing'
+    context_object_name = 'mailings'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        mailings = Mailing.objects.all()
+        active_mailings = mailings.filter(status='Запущена').count()
+        unique_clients = Client.objects.filter(mailing__in=mailings).distinct('id').count()
+        total_mailings = mailings.count()
+        all_blogs = list(BlogPost.objects.all())
+        random.shuffle(all_blogs)
+        context['object_list'] = all_blogs[:3]
+        context['active_mailings'] = active_mailings
+        context['unique_clients'] = unique_clients
+        context['total_mailings'] = total_mailings
+        return context
 
 
 class MailingListView(ListView):
     model = Mailing
     template_name = 'mailing/mailing_list.html'
     context_object_name = 'mailings'
+
+
+def disable_the_mailing(request, pk):
+    mailing_item = get_object_or_404(Mailing, pk=pk)
+    if mailing_item.status == "Запущена":
+        mailing_item.status = "Завершена"
+
+    elif mailing_item.status == "Завершена":
+        mailing_item.status = "Запущена"
+
+    mailing_item.save()
+
+    return redirect(reverse('mailings:mailing_list'))
 
 
 class MailingDetailView(DetailView):
