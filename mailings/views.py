@@ -68,10 +68,6 @@ class MailingCreateView(CreateView):
     success_url = reverse_lazy('mailings:mailing_list')
 
     def form_valid(self, form):
-        model = form.save()
-        user = self.request.user
-        model.owner = user
-        model.save()
         return super().form_valid(form)
 
 
@@ -112,10 +108,7 @@ class ClientCreateView(CreateView):
     success_url = reverse_lazy('mailings:client_list')
 
     def form_valid(self, form):
-        model = form.save()
-        user = self.request.user
-        model.owner = user
-        model.save()
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
 
@@ -156,10 +149,6 @@ class MessageCreateView(CreateView):
     success_url = reverse_lazy('mailings:message_list')
 
     def form_valid(self, form):
-        model = form.save()
-        user = self.request.user
-        model.owner = user
-        model.save()
         return super().form_valid(form)
 
 

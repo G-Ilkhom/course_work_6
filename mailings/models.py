@@ -7,7 +7,7 @@ class Client(models.Model):
     email = models.EmailField(null=True, blank=True)
     full_name = models.CharField(max_length=100)
     comment = models.TextField(null=True, blank=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_clients')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clients')
 
     def __str__(self):
         return self.full_name
@@ -16,7 +16,6 @@ class Client(models.Model):
 class Message(models.Model):
     topic = models.CharField(max_length=100)
     content = models.TextField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_messages')
 
     def __str__(self):
         return self.topic
@@ -49,7 +48,6 @@ class Mailing(models.Model):
     status = models.CharField(default=CREATED, max_length=20, choices=SELECT_STATUS)
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     client = models.ManyToManyField(Client)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_mailings')
     is_disabled = models.BooleanField(default=False)
 
     def __str__(self):
