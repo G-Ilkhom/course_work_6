@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 
+
 class BlogPost(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок')
     content = models.TextField()

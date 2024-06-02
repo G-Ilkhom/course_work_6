@@ -15,6 +15,10 @@ apscheduler = "^3.10.4"
 psycopg2 = "^2.9.9"
 dotenv = "^0.0.5"
 load-dotenv = "^0.1.0"
+django-apscheduler = "^0.6.2"
+pillow = "^10.3.0"
+pytils = "^0.4.1"
+python-dotenv = "^1.0.1"
 
 
 [build-system]
