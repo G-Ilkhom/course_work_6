@@ -4,30 +4,34 @@
     <main class="row justify-content-center mt-5">
         {% if user.is_superuser %}
             <div class="col-12 mb-5 text-center">
-                <a class="btn btn-outline-primary" href="{% url 'blog:create' %}">Добавить блог</a>
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'blog:create' %}">Добавить блог</a>
             </div>
         {% endif %}
 
         {% for object in object_list|slice:100 %}
-            <div class="col-4 text-center">
+            <div class="col-md-4 col-sm-6 text-center">
                 <div class="card mt-3 rounded-3 shadow-sm">
                     <div class="card-header py-3">
                         <h4 class="my-0 fw-normal">{{ object.title }}</h4>
                     </div>
                     <div class="card-body">
+                        <img src="{{ object.image.url }}" class="img-fluid" alt="{{ object.title }}" style="max-width: 300px; max-height: 300px;">
                         <p>{{ object.content }}</p>
-                        <div class="btn-group d-flex justify-content-between align-items-center">
-                            <a class="btn btn btn-primary" href="{% url 'blog:view' object.pk %}">Посмотреть</a>
+                        <div class="d-grid gap-2">
+                            {% if not object or user.is_superuser %}
+                            <a class="btn btn-primary btn-sm" href="{% url 'blog:view' object.pk %}">Посмотреть</a>
+                            {% endif %}
 
                             {% if not object or user.is_superuser %}
-                                <a class="btn btn btn-warning" href="{% url 'blog:edit' object.pk %}">Редактировать</a>
-                                <a class="btn btn btn-danger" href="{% url 'blog:delete' object.pk %}">Удалить</a>
-
-                                {% if object.publication_sign %}
-                                    <a class="btn btn-warning" href="{% url 'blog:switching_publications' object.pk %}">Снять с публикации</a>
-                                {% else %}
-                                    <a class="btn btn-success" href="{% url 'blog:switching_publications' object.pk %}">Опубликовать</a>
-                                {% endif %}
+                                <div class="btn-group">
+                                    <a class="btn btn-warning btn-sm" href="{% url 'blog:edit' object.pk %}">Редактировать</a>
+                                    <a class="btn btn-danger btn-sm" href="{% url 'blog:delete' object.pk %}">Удалить</a>
+                                    {% if object.publication_sign %}
+                                        <a class="btn btn-warning btn-sm" href="{% url 'blog:switching_publications' object.pk %}">Снять с публикации</a>
+                                    {% else %}
+                                        <a class="btn btn-success btn-sm" href="{% url 'blog:switching_publications' object.pk %}">Опубликовать</a>
+                                    {% endif %}
+                                </div>
                             {% endif %}
                         </div>
                     </div>

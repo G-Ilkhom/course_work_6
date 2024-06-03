@@ -6,7 +6,7 @@
             <div class="card mt-3 rounded-3 shadow-sm">
                 <div class="card-header py-3">
                     {% if object.image %}
-                    <img src="{{ object.image.url }}">
+                    <img src="{{ object.image.url }}" class="img-thumbnail" style="width: 300px; height: 300px;">
                     {% endif %}
                     <h4 class="my-0 fw-normal">{{ object.title }}</h4>
                 </div>

@@ -13,7 +13,7 @@ MailingsConfig.ready()
 
 class HomeListView(ListView):
     model = Mailing
-    template_name = 'base.html'
+    template_name = 'mailing/home.html'
     context_object_name = 'mailings'
 
     def get_context_data(self, **kwargs):
